@@ -24,6 +24,7 @@ export default class DropzoneS3Uploader extends React.Component {
     filename: PropTypes.string,
     max_file_size: PropTypes.number,
     maxFileSize: PropTypes.number,
+    maxFiles: PropTypes.number,
 
     style: PropTypes.object,
     active_style: PropTypes.object,
@@ -93,6 +94,9 @@ export default class DropzoneS3Uploader extends React.Component {
 
     if (!this.props.multiple && files.length > 1) {
       error = `Only drop one file`
+    }
+    else if (this.props.maxFiles && files.length > this.props.maxFiles) {
+      error = `You are allowed to upload a maximum of only ${this.props.maxFiles} files.`
     }
     else if (maxFileSize && size > maxFileSize) {
       const sizeKB = (size / 1024 / 1024).toFixed(2)
